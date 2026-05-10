@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamer Command Center Pro</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --accent: #00d2ff;
+            --success: #00ff88;
+            --discipline: #ffcc00;
+            --grooming: #ff85a2; /* Soft Pink for Grooming */
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1a1a2e, var(--bg));
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 480px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        header { text-align: center; margin-bottom: 20px; }
+        .status-badge {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border: 1px solid var(--accent);
+            margin-bottom: 10px;
+        }
+
+        h1 { font-size: 1.4rem; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+
+        .input-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 12px;
+        }
+
+        .input-box label { display: block; font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px; }
+        .input-box input { background: none; border: none; color: white; width: 100%; font-size: 0.95rem; outline: none; }
+
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .sop-section { margin-top: 20px; }
+        .sop-section h3 { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; letter-spacing: 1px; }
+        .sop-section h3::after { content: ""; flex: 1; height: 1px; background: var(--border-glass); margin-left: 10px; }
+        
+        /* Section Colors */
+        .sop-section.tech h3 { color: var(--accent); }
+        .sop-section.grooming h3 { color: var(--grooming); }
+        .sop-section.discipline h3 { color: var(--discipline); }
+
+        .check-card {
+            display: flex; align-items: center; background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 8px; padding: 10px 15px; border-radius: 12px; cursor: pointer; transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .check-card input[type="checkbox"] {
+            appearance: none; width: 18px; height: 18px; border: 2px solid var(--border-glass);
+            border-radius: 5px; margin-right: 12px; cursor: pointer; position: relative;
+        }
+
+        /* Checkbox Colors based on section */
+        .tech .check-card input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+        .grooming .check-card input[type="checkbox"]:checked { background: var(--grooming); border-color: var(--grooming); }
+        .discipline .check-card input[type="checkbox"]:checked { background: var(--discipline); border-color: var(--discipline); }
+        
+        .check-card input[type="checkbox"]:checked::after { content: "✓"; color: black; position: absolute; left: 3px; top: -2px; font-weight: bold; font-size: 13px; }
+        .check-card span { font-size: 0.8rem; color: var(--text-secondary); }
+        .check-card input[type="checkbox"]:checked + span { color: white; }
+
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        button { padding: 12px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.85rem; }
+        .btn-save { background: #333; color: white; }
+        .btn-wa { background: var(--success); color: black; }
+        button:hover { opacity: 0.8; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <div class="status-badge">READY TO BROADCAST</div>
+        <h1>PRO STREAMER HUB</h1>
+    </header>
+
+    <div class="input-box">
+        <label>Streaming Date</label>
+        <input type="date" id="streamDate">
+    </div>
+
+    <div class="input-box">
+        <label>Game Title</label>
+        <input type="text" id="gameTitle" placeholder="e.g. Valorant / Mobile Legends">
+    </div>
+
+    <div class="grid-info">
+        <div class="input-box">
+            <label>Target Viewers</label>
+            <input type="number" id="viewers" placeholder="100">
+        </div>
+        <div class="input-box">
+            <label>Goal Koin/Gift</label>
+            <input type="text" id="coins" placeholder="500 Coins">
+        </div>
+    </div>
+
+    <div class="sop-section tech">
+        <h3>Technical Check</h3>
+        <label class="check-card"><input type="checkbox"> <span>Internet & Audio Test</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Camera & Lighting Setup</span></label>
+    </div>
+
+    <!-- SEKSI GROOMING / PENAMPILAN -->
+    <div class="sop-section grooming">
+        <h3>Aesthetic & Grooming</h3>
+        <label class="check-card"><input type="checkbox"> <span>Hair Styling (Rapih/Gaya)</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Face/Makeup (Anti-Kusam/Fresh)</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Outfit (Baju Bersih & Menarik)</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Fragrance (Biar makin PD)</span></label>
+    </div>
+
+    <div class="sop-section discipline">
+        <h3>Discipline & Mindset</h3>
+        <label class="check-card"><input type="checkbox"> <span>On-Time Start</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Fokus & No Phone Distraction</span></label>
+        <label class="check-card"><input type="checkbox"> <span>Postur Tegak & Ramah</span></label>
+    </div>
+
+    <div class="actions">
+        <button class="btn-save" onclick="saveData()">SAVE CONFIG</button>
+        <button class="btn-wa" onclick="shareWA()">SHARE TO WA</button>
+    </div>
+</div>
+
+<script>
+    function setAutoDate() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('streamDate').value = today;
+    }
+
+    function saveData() {
+        const data = {
+            date: document.getElementById('streamDate').value,
+            game: document.getElementById('gameTitle').value,
+            viewers: document.getElementById('viewers').value,
+            coins: document.getElementById('coins').value
+        };
+        localStorage.setItem('streamProData', JSON.stringify(data));
+        alert("Configuration & Appearance Ready.");
+    }
+
+    function shareWA() {
+        const dateInput = document.getElementById('streamDate').value;
+        const game = document.getElementById('gameTitle').value || "Broadcast";
+        const dateFormatted = new Date(dateInput).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        
+        let text = `*✨ PROFESSIONAL STREAM READY*%0A%0A`;
+        text += `📅 *Tanggal:* ${dateFormatted}%0A`;
+        text += `🎮 *Game:* ${game}%0A%0A`;
+        text += `✅ *Tech:* OK!%0A`;
+        text += `✅ *Appearance:* Fresh & Styled!%0A`;
+        text += `✅ *Mindset:* Disciplined!%0A%0A`;
+        text += `_Ready to entertain. Gaskeun!_`;
+
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    window.onload = function() {
+        setAutoDate();
+        const saved = JSON.parse(localStorage.getItem('streamProData'));
+        if(saved) {
+            document.getElementById('streamDate').value = saved.date;
+            document.getElementById('gameTitle').value = saved.game;
+            document.getElementById('viewers').value = saved.viewers;
+            document.getElementById('coins').value = saved.coins;
+        }
+    }
+</script>
+
+</body>
+</html>
